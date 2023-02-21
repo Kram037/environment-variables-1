@@ -1,6 +1,7 @@
 package co.develhope.environmentvariables1.controllers;
 
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -9,14 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/property")
 public class MainController {
 
-    @Value("${myCustomProps.devName}")
-    private String myCustomEnv;
+    @Autowired
+    private Environment environment;
 
-    @Value("${myCustomProps.authCode}")
-    private String authCode;
-
-    @GetMapping("")
-    public String getProperty(){
-        return myCustomEnv + " " + authCode;
+    @GetMapping
+    public String getUser(){
+        return environment.getProperty("myCustomProps.devName") + " " + environment.getProperty("myCustomProps.authCode");
     }
 }
